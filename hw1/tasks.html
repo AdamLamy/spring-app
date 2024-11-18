@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Homework 1: Tasks for al536</title>
+</head>
+
+<body>
+<h1>Homework 1: Tasks for al536</h1>
+
+<p>Your personal task is to develop a system for arcades and their machines.</p>
+
+<h2>Task 1: Configuration [4 marks]</h2>
+<p>Configure the project to support the use of JSPs as view technology. JSPs must be configured to be placed inside folder <code>src/main/webapp/WEB-INF/views/</code>.</p>
+
+<h2>Task 2: Domain Classes [13 marks]</h2>
+
+<p>Create class <code>co2123.hw1.domain.Machine</code>. With the following private fields:
+<ol>
+  <li><code>String tagline</code></li>
+  <li><code>String supplier</code></li>
+  <li><code>String genre</code></li>
+  <li><code>int score</code></li>
+</ol>
+Generate necessary getters and setters. [7 marks]
+</p>
+
+<p>Create class <code>co2123.hw1.domain.Arcade</code>. With the following private fields:
+<ol>
+  <li><code>int id</code></li>
+  <li><code>String name</code></li>
+  <li><code>String website</code></li>
+  <li><code>List&lt;Machine&gt; machines</code></li>
+</ol>
+Generate necessary getters and setters. [6 marks]
+</p>
+
+
+<h2>Task 3: Controller (simple) [5 marks]</h2>
+<p>Create controller <code>co2123.hw1.controller.MainController</code> [2 marks].
+<ol>
+  <li>Requests for URL <code>"/"</code> (POST and GET) should show the view <code>start</code> (the corresponding JSP already exists). [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 4: Controller, View, and Form [20 marks]</h2>
+
+<p>Create field <code>public static List&lt;Arcade&gt; arcades</code> in class <code>co2123.hw1.Hw1Application</code>. Initialize the list inside class <code>co2123.hw1.Hw1Application</code> to contain one arcade with two machines. [4 marks]</p>
+
+<p>Create controller <code>co2123.hw1.controller.ArcadeController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/arcades"</code> should show view <code>arcades/list</code>. [2 marks]
+    <ul>
+      <li>Add the list of all arcades from <code>co2123.hw1.Hw1Application</code> to the model as attribute <code>arcades</code>. [2 marks]</li>
+      <li>Create the corresponding JSP to list the name and website of each arcade followed by a link to URL <code>"/machines?arcade={id of arcade}"</code>, e.g., <code>"/machines?arcade=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/newArcade"</code> should show view <code>arcades/form</code>. [3 marks] Create the corresponding JSP with a form with <code>modelAttribute="arcade"</code> and <code>action="/addArcade"</code> and inputs for all fields of class <code>Arcade</code> except for <code>machines</code>. [5 marks]</li>
+  <li>POST requests for URL <code>"/addArcade"</code> should add a new arcade to the list of all arcades in <code>co2123.hw1.Hw1Application</code> and redirect to <code>/arcades</code>. [3 marks]</li>
+</ol>
+</p>
+
+<h2>Task 5: Controller, View, and Form with additional Parameter [33 marks]</h2>
+
+<p>Create controller <code>co2123.hw1.controller.MachineController</code> and add methods with request mappings for the following behavior:
+<ol>
+  <li>GET requests for URL <code>"/machines"</code> should show view <code>machines/list</code>. [2 marks]
+    <ul>
+      <li>Based on request parameter <code>arcade</code> determine the corresponding arcade from <code>co2123.hw1.Hw1Application</code>. [2 marks]</li>
+      <li>Add the list of all machines of that arcade to the model as attribute <code>machines</code>. [2 marks]</li>
+      <li>Create the corresponding JSP for the view to list the tagline, supplier, genre, and score of each machine. [4 marks]</li>
+      <li>At the end of the list in the JSP add a link to URL <code>"/newMachine?arcade={id of arcade whose machines are listed}"</code>, e.g., <code>"/newMachine?arcade=3"</code>. [4 marks]</li>
+    </ul>
+  </li>
+  <li>Requests for URL <code>"/newMachine"</code> should show view <code>machines/form</code>. [3 marks]
+    <ul>
+      <li>Create the corresponding JSP with a form with <code>modelAttribute="machine"</code> and <code>action="/addMachine"</code> and inputs for all fields of class <code>Machine</code>. [6 marks]</li>
+      <li>Also add the request parameter <code>arcade</code> with the ID of the current arcade. [4 marks]</li>
+    </ul>
+  </li>
+  <li>POST requests for URL <code>"/addMachine"</code> should add a new machine to the list of machines of the arcade identified by request parameter <code>arcade</code> and then redirect to <code>/arcades</code>. [6 marks]</li>
+</ol>
+</p>
+
+<h2>Task 6: Validation [25 marks]</h2>
+
+<p>Set up a validator for class <code>Arcade</code> and make it available in controller <code>ArcadeController</code>. [4 marks]</p>
+<p>When adding a new arcade validate that
+  <ol>
+    <li>The value of field <code>id</code> is unique within the list <code>Hw1Application.arcades</code>. [3 marks]</li>
+    <li>The value of field <code>name</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>website</code> is not empty. [2 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+
+<p>Set up a validator for class <code>Machine</code> and make it available in controller <code>MachineController</code>. [4 marks]</p>
+<p>When adding a new machine validate that
+  <ol>
+    <li>The value of field <code>tagline</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>supplier</code> is not empty. [2 marks]</li>
+    <li>The value of field <code>genre</code> is either <code>"Platform"</code>, <code>"Puzzle"</code>, or <code>"Rhythm"</code>. [3 marks]</li>
+    <li>The value of field <code>score</code> is between (including) 50 and 750. [3 marks]</li>
+  </ol>
+  In case of validation errors go back to the form and show error messages for each field in the form.
+</p>
+
+</body>
+
+</html>
